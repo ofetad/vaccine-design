@@ -1,0 +1,21 @@
+import re
+import pandas as pd
+
+# Path to the file
+file_path = 'vaxijen_output'
+
+# Regular expression pattern to match the sequence number, peptide, and antigen status
+pattern = r'>Sequence_(\d+)\s*\n\s*([A-Z]+)\s*\n\s*Overall Prediction for the Protective Antigen = [+-]?\d+\.\d+ \(\s*Probable\s*(NON-ANTIGEN|ANTIGEN)\s*\)'
+
+# Read the entire file content
+with open(file_path, 'r') as file:
+    file_content = file.read()
+
+# Find all matches with the regular expression pattern
+matches = re.findall(pattern, file_content)
+
+# Create DataFrame from the matches
+df = pd.DataFrame(matches, columns=['Sequence Number', 'Peptide', 'Antigen Status'])
+
+# Display the DataFrame
+print(df)
